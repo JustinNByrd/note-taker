@@ -33,7 +33,11 @@ app.post('/api/notes', (req, res) => {
     // add new note to beginning of array with an id of 1
     newNote.id = 1;
     noteArray.unshift(newNote);
+
+    // write to file
     fs.writeFileSync('./db/db.json', JSON.stringify(noteArray));
+
+    // respond with 200 ok
     res.sendStatus(200);
 });
 
