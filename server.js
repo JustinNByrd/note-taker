@@ -1,7 +1,6 @@
 const express = require("express");
 const path = require("path");
 const fs = require('fs');
-const { RSA_NO_PADDING } = require("constants");
 
 const app = express();
 
@@ -17,6 +16,20 @@ app.get('/api/notes', (req, res) => {
     let file = fs.readFileSync('./db/db.json');
     let jsonData = JSON.parse(file);
     res.send(jsonData);
+});
+
+app.use(express.json());
+
+app.post('/api/notes', (req, res) => {
+    let file = fs.readFileSync('./db/db.json');
+    let noteArray = JSON.parse(file);
+    let newNote = req.body;
+    noteArray.forEach((item, index) => {
+        item.id = index + 1;
+    });
+    newNote.id = 0;
+    noteArray.unshift(newNote);
+    fs.writeFileSync('./db/db.json', JSON.stringify(noteArray));
 });
 
 app.listen(PORT, () => console.log(`Web server listening on port: ${PORT}`));
