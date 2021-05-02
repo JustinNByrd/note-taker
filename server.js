@@ -24,10 +24,14 @@ app.post('/api/notes', (req, res) => {
     let file = fs.readFileSync('./db/db.json');
     let noteArray = JSON.parse(file);
     let newNote = req.body;
+
+    // set existing ids starting with 2
     noteArray.forEach((item, index) => {
-        item.id = index + 1;
+        item.id = index + 2;
     });
-    newNote.id = 0;
+    
+    // add new note with an id of 1
+    newNote.id = 1;
     noteArray.unshift(newNote);
     fs.writeFileSync('./db/db.json', JSON.stringify(noteArray));
 });
