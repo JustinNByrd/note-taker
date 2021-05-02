@@ -26,14 +26,33 @@ app.post('/api/notes', (req, res) => {
     let newNote = req.body;
 
     // set existing ids starting with 2
-    noteArray.forEach((item, index) => {
-        item.id = index + 2;
+    noteArray.forEach((note, index) => {
+        note.id = index + 2;
     });
 
-    // add new note with an id of 1
+    // add new note to beginning of array with an id of 1
     newNote.id = 1;
     noteArray.unshift(newNote);
     fs.writeFileSync('./db/db.json', JSON.stringify(noteArray));
+    res.sendStatus(200);
+});
+
+app.delete('/api/notes/:id', (req, res) => {
+    let file = fs.readFileSync('./db/db.json');
+    let noteArray = JSON.parse(file);
+    
+    // remove note from array
+    noteArray.splice(req.params.id - 1, 1);
+
+    // update ids
+    noteArray.forEach((note, index) => {
+        note.id = index + 1;
+    });
+
+    // write updated array to file
+    fs.writeFileSync('./db/db.json', JSON.stringify(noteArray));
+
+    // respond with 200 ok
     res.sendStatus(200);
 });
 
