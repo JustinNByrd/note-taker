@@ -3,6 +3,9 @@
 ## Description
 A web based application to take and store notes.
 
+## Depoyment
+![Note Taker deployment](https://note-taker-jbyrd.herokuapp.com/)
+
 ## Screenshot
 ![Note Taker screenshot](./notesScreenshot.png)
 
