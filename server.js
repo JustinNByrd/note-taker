@@ -29,11 +29,12 @@ app.post('/api/notes', (req, res) => {
     noteArray.forEach((item, index) => {
         item.id = index + 2;
     });
-    
+
     // add new note with an id of 1
     newNote.id = 1;
     noteArray.unshift(newNote);
     fs.writeFileSync('./db/db.json', JSON.stringify(noteArray));
+    res.sendStatus(200);
 });
 
 app.listen(PORT, () => console.log(`Web server listening on port: ${PORT}`));
